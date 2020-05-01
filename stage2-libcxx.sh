@@ -33,7 +33,7 @@ cd build
 cmake \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
-    -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -frtti -fexceptions" \
+    -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -frtti -fexceptions -D_LIBCPP_HAS_MUSL_LIBC " \
     -DLIBCXXABI_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DLIBCXX_HAS_MUSL_LIBC=ON \
     -DCMAKE_SHARED_LINKER_FLAGS="-L../../libunwind/build/lib" \
