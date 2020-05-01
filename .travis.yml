@@ -5,6 +5,9 @@ compiler:
 - clang
 os:
 - linux
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install ninja-build
 script:
 - sh build.sh
 deploy:
