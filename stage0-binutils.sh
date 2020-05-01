@@ -1,7 +1,7 @@
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain_temp
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
-git clone https://github.com/bminor/binutils-gdb
+git clone --depth 1 https://github.com/bminor/binutils-gdb
 cd binutils-gdb
 ./configure --prefix=$PS4SDK --target="x86_64-pc-freebsd9" \
 	--disable-nls \
