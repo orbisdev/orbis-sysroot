@@ -1,6 +1,6 @@
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
-git clone https://github.com/llvm/llvm-project.git
+git clone --depth 1 https://github.com/llvm/llvm-project.git
 cd llvm-project
 
 patch -p1 < ../llvm_patches.diff
