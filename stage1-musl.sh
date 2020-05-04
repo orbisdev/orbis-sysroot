@@ -1,8 +1,21 @@
+#±/bin/bash
+set -e
+
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
-git clone --depth 1 https://github.com/orbisdev/musl
+GIT_REFERENCE=${1:-master}
+
+rm -rf musl
+mkdir musl
 cd musl
+
+git init
+git remote add origin https://github.com/orbisdev/musl
+git fetch --depth 1 origin ${GIT_REFERENCE}
+git checkout FETCH_HEAD
+git log
+
 CC=clang CFLAGS=--target=x86_64-scei-ps4 ./configure  --disable-shared  --prefix=$PS4SDK/usr --target=orbis
 make -j $PROC_NR
 make install

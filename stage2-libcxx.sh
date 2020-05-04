@@ -1,3 +1,6 @@
+#±/bin/bash
+set -e
+
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
 git clone --depth 1 https://github.com/llvm/llvm-project.git

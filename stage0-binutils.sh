@@ -1,3 +1,6 @@
+#±/bin/bash
+set -e
+
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain_temp
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
