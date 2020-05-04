@@ -22,10 +22,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Install ninja-build
+    - name: Install ninja-build texinfo bison flex
       run: |
         sudo apt-get update
-        sudo apt-get -y install ninja-build
+        sudo apt-get -y install ninja-build texinfo bison flex
 
     - name: Runs all the stages in the shell
       env:
