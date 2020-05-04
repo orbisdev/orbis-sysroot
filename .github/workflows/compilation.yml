@@ -48,7 +48,7 @@ jobs:
         echo "::set-env name=NEW_TAGNAME::$TAGNAME"
 
     - name: Release
-      if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/master' || github.event.action == 'run_release'
+      if: startsWith(github.ref, 'refs/tags/') || github.event.action == 'run_release' || ( github.ref == 'refs/heads/master' && github.event.action == '' )
       uses: softprops/action-gh-release@v1
       with:
         files: toolchain.tar.gz
