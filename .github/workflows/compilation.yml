@@ -35,23 +35,17 @@ jobs:
       run: |
         ./build.sh ${{ github.event.client_payload.sha }}
 
-    - name: Create tag name
-      if: startsWith(github.ref, 'refs/tags/') != true
-      run: |
-        export TAGNAME="snapshot_$(date +'%Y_%m_%d_%H%M%S')"
-        echo "::set-env name=NEW_TAGNAME::$TAGNAME"
-    
-    - name: Use tag name
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-        export TAGNAME="$(echo ${GITHUB_REF##*/})"
-        echo "::set-env name=NEW_TAGNAME::$TAGNAME"
-
-    - name: Release
+    - uses: actions/upload-artifact@v2
       if: startsWith(github.ref, 'refs/tags/') || github.event.action == 'run_release' || ( github.ref == 'refs/heads/master' && github.event.action == '' )
+      with:
+        name: toolchain
+        path: toolchain.tar.gz
+    
+    - name: Release
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: toolchain.tar.gz
-        tag_name: ${{ env.NEW_TAGNAME }}
+        tag_name: ${GITHUB_REF##*/}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
