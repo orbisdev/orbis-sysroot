@@ -3,6 +3,9 @@ set -e
 
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
+ORBIS_BINUTILS=$ROOT/toolchain_temp/bin
+# We need orbis-ld
+PATH=$ORBIS_BINUTILS:$PATH
 
 wget https://github.com/orbisdev/orbis-libs-gen/releases/latest/download/lib_s.tar.gz
 
