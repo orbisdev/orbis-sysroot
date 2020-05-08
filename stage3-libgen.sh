@@ -18,3 +18,5 @@ do
     clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}.so $i
     # echo "clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}.so $i"
 done
+
+cp *.so $PS4SDK/usr/lib
