@@ -8,7 +8,7 @@ on:
   push:
   pull_request:
   repository_dispatch:
-    types: [run_build, run_release]
+    types: [run_build, run_release, run_build_libs_gen, run_release_libs_gen, run_build_headers, run_release_headers, run_build_musl, run_release_musl]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
