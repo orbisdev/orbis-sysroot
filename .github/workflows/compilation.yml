@@ -36,7 +36,6 @@ jobs:
         ./build.sh ${{ github.event.client_payload.sha }}
 
     - uses: actions/upload-artifact@v2
-      if: startsWith(github.ref, 'refs/tags/') || github.event.action == 'run_release' || ( github.ref == 'refs/heads/master' && github.event.action == '' )
       with:
         name: toolchain
         path: toolchain.tar.gz
