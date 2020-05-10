@@ -1,0 +1,6 @@
+
+toolchain/
+toolchain_temp/
+lib_s/
+orbis-headers/
+binutils-gdb/

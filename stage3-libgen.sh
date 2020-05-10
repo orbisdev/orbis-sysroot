@@ -9,14 +9,17 @@ PATH=$ORBIS_BINUTILS:$PATH
 
 wget https://github.com/orbisdev/orbis-libs-gen/releases/latest/download/lib_s.tar.gz
 
+rm -rf lib_s
 tar -zxvf lib_s.tar.gz
-
 cd lib_s
 
-for i in *.S
-do
-    clang --target=x86_64-scei-ps4 $i -c
-    ar -rcs ${i%.S}_stub.a ${i%.S}.o
+for d in */ ; do
+    cd $d
+    for i in *.S ; do
+        clang --target=x86_64-scei-ps4 $i -c
+        ar -rcs ${i%.S}_stub.a ${i%.S}.o
+    done
+    cd ..
 done
 
-cp *.a $PS4SDK/usr/lib
+find . -name '*.a' -exec cp --parents \{\} $PS4SDK/usr/lib \;
