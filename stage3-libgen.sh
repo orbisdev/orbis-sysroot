@@ -3,7 +3,7 @@ set -e
 
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
-ARCHIVE=ar rcs
+ARCHIVE="ar -rcs"
 ORBIS_BINUTILS=$ROOT/toolchain_temp/bin
 # We need orbis-ld
 PATH=$ORBIS_BINUTILS:$PATH
@@ -21,7 +21,7 @@ do
         clang --target=x86_64-scei-ps4 $i -c
     done
     ls *.o > ${d}_list.tmp
-    xargs ${archive} ${d}_stub.a < ${d}_list.tmp
+    xargs ${ARCHIVE} ${d}_stub.a < ${d}_list.tmp
     cd ..
 done
 
