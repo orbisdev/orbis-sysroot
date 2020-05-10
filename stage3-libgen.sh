@@ -16,7 +16,7 @@ cd lib_s
 for i in *.S
 do
     clang --target=x86_64-scei-ps4 $i -c
-    ar -rcs ${i%.S}.a ${i%.S}.o
+    ar -rcs ${i%.S}_stub.a ${i%.S}.o
 done
 
 cp *.a $PS4SDK/usr/lib
