@@ -40,11 +40,19 @@ jobs:
         name: toolchain
         path: toolchain.tar.gz
     
+    - name: Extract tag name
+      id: tag
+      uses: actions/github-script@0.2.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          return context.payload.ref.replace(/\/refs\/tags\//, '');
+    
     - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: toolchain.tar.gz
-        tag_name: ${GITHUB_REF##*/}
+        tag_name: ${{ steps.tag.outputs.result }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
