@@ -14,15 +14,9 @@ rm -rf lib_s
 tar -zxvf lib_s.tar.gz
 cd lib_s
 
-for d in `ls -d *`
+for i in *.S
 do
-    cd $d
-    for i in *.S ; do
-        clang --target=x86_64-scei-ps4 $i -c
-    done
-    ls *.o > ${d}_list.tmp
-    xargs ${ARCHIVE} ${d}_stub.a < ${d}_list.tmp
-    cd ..
+    clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}.so $i
 done
 
-find . -name '*.a' -exec cp \{\} $PS4SDK/usr/lib \;
+cp *.so $PS4SDK/usr/lib
