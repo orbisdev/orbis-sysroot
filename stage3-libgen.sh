@@ -16,7 +16,7 @@ cd lib_s
 
 for i in *.S
 do
-    clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}.so $i
+    clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}_stub.so $i
 done
 
 cp *.so $PS4SDK/usr/lib
