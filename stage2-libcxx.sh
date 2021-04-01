@@ -3,8 +3,16 @@ set -e
 
 ROOT=${PWD}
 PS4SDK=$ROOT/toolchain
-git clone --depth 1 https://github.com/llvm/llvm-project.git
-cd llvm-project
+
+## Download the source code.
+REPO_URL="https://github.com/llvm/llvm-project.git"
+REPO_FOLDER="llvm-project"
+BRANCH_NAME="llvmorg-11.1.0"
+if test ! -d "$REPO_FOLDER"; then
+	git clone --depth 1 -b $BRANCH_NAME $REPO_URL && cd $REPO_FOLDER || exit 1
+else
+	cd $REPO_FOLDER && git fetch origin && git reset --hard origin/${BRANCH_NAME} || exit 1
+fi
 
 patch -p1 < ../llvm_patches.diff
 
