@@ -1,0 +1,13 @@
+#±/bin/bash
+set -e
+
+ROOT=${PWD}
+PS4SDK=$ROOT/toolchain
+
+git clone --depth 1 https://github.com/orbisdev/orbisdev-headers.git
+
+cd orbisdev-headers
+
+mkdir -p $PS4SDK/usr/include/
+
+cp -r include/* $PS4SDK/usr/include/

@@ -16,7 +16,10 @@ cd lib_s
 
 for i in *.S
 do
-    clang --target=x86_64-scei-ps4 -shared -nostdlib -o  ${i%.S}_stub.so $i
+    clang --target=x86_64-scei-ps4 -nostdlib -m64 -c -o  ${i%.S}.o $i
+    orbis-ld --eh-frame-hdr -Bshareable --enable-new-dtags -o ${i%.S}_stub.so ${i%.S}.o
 done
+
+mkdir -p $PS4SDK/usr/lib
 
 cp *.so $PS4SDK/usr/lib

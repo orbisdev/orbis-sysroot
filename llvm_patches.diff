@@ -1,50 +1,37 @@
 diff --git a/libcxx/include/__config b/libcxx/include/__config
-index bfde9e9c989..b6edb909cbe 100644
+index 97e33f315..0567b611a 100644
 --- a/libcxx/include/__config
 +++ b/libcxx/include/__config
-@@ -244,7 +244,11 @@
- #endif // __BYTE_ORDER__
- 
- #ifdef __FreeBSD__
--#  include <sys/endian.h>
-+#  if !defined(_LIBCPP_HAS_MUSL_LIBC)
-+#    include <sys/endian.h>
-+#  else
-+#    include <endian.h>
-+#  endif
- #  include <osreldate.h>
- #  if _BYTE_ORDER == _LITTLE_ENDIAN
- #    define _LIBCPP_LITTLE_ENDIAN
-@@ -918,8 +922,8 @@ typedef unsigned int   char32_t;
- #define _LIBCPP_EXTERN_TEMPLATE_DEFINE(...) template __VA_ARGS__;
+@@ -939,8 +939,8 @@ typedef unsigned int   char32_t;
+ #   define _LIBCPP_EXTERN_TEMPLATE_EVEN_IN_DEBUG_MODE(...) extern template __VA_ARGS__;
  #endif
  
 -#if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || \
 -    defined(__sun__) || defined(__NetBSD__) || defined(__CloudABI__)
 +#if (defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || \
-+    defined(__sun__) || defined(__NetBSD__) || defined(__CloudABI__)) && !defined(_LIBCPP_HAS_MUSL_LIBC)
++    defined(__sun__) || defined(__NetBSD__) || defined(__CloudABI__)) && !defined(__ORBIS__)
  #define _LIBCPP_LOCALE__L_EXTENSIONS 1
  #endif
  
-@@ -957,7 +961,7 @@ typedef unsigned int   char32_t;
- #  define _LIBCPP_HAS_NO_ALIGNED_ALLOCATION
- #endif
- 
--#if defined(__APPLE__) || defined(__FreeBSD__)
-+#if defined(__APPLE__) || (defined(__FreeBSD__) && !defined(_LIBCPP_HAS_MUSL_LIBC))
+@@ -976,7 +976,7 @@ typedef unsigned int   char32_t;
  #define _LIBCPP_HAS_DEFAULTRUNELOCALE
  #endif
  
-diff --git a/libcxx/src/thread.cpp b/libcxx/src/thread.cpp
-index c0bc1cbbbbc..7ef4944b94c 100644
---- a/libcxx/src/thread.cpp
-+++ b/libcxx/src/thread.cpp
-@@ -18,7 +18,7 @@
+-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)
++#if (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)) && !defined(__ORBIS__)
+ #define _LIBCPP_WCTYPE_IS_MASK
+ #endif
+ 
+diff --git a/libcxx/include/locale b/libcxx/include/locale
+index 8e584005d..d6aa0ee2a 100644
+--- a/libcxx/include/locale
++++ b/libcxx/include/locale
+@@ -206,7 +206,7 @@ template <class charT> class messages_byname;
  
  #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
- # include <sys/param.h>
--# if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) || defined(__APPLE__)
-+# if (defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) || defined(__APPLE__)) && !defined(_LIBCPP_HAS_MUSL_LIBC)
- #   include <sys/sysctl.h>
- # endif
- #endif // defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ // Most unix variants have catopen.  These are the specific ones that don't.
+-#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION)
++#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION) && !defined(__ORBIS__)
+ #    define _LIBCPP_HAS_CATOPEN 1
+ #    include <nl_types.h>
+ #  endif

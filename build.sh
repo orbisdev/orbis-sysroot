@@ -2,8 +2,7 @@
 set -e
 
 sh stage0-binutils.sh
-sh stage1-musl.sh $1
-sh stage2-libcxx.sh
-sh stage3-libgen.sh
-sh stage4-ps4sdk-headers.sh
+sh stage1-headers.sh
+sh stage2-libgen.sh
+sh stage3-libcxx.sh
 tar -zcvf toolchain.tar.gz toolchain
