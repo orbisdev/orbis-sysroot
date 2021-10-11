@@ -2,7 +2,7 @@
 set -e
 
 ROOT=${PWD}
-PS4SDK=$ROOT/toolchain
+PS4SDK=$ROOT
 ARCHIVE="ar -rcs"
 ORBIS_BINUTILS=$ROOT/toolchain_temp/bin
 # We need orbis-ld
