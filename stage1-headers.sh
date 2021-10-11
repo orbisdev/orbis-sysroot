@@ -2,7 +2,7 @@
 set -e
 
 ROOT=${PWD}
-PS4SDK=$ROOT/toolchain
+PS4SDK=$ROOT
 
 git clone --depth 1 https://github.com/orbisdev/orbisdev-headers.git -b sce
 
