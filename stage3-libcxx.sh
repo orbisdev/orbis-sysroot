@@ -2,7 +2,7 @@
 set -e
 
 ROOT=${PWD}
-PS4SDK=$ROOT/toolchain
+PS4SDK=$ROOT
 
 ORBIS_BINUTILS=$ROOT/toolchain_temp/bin
 # We need orbis-ld
@@ -71,8 +71,8 @@ cd build
 
 
 cmake \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=clang-13 \
+    -DCMAKE_CXX_COMPILER=clang++-13 \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -frtti -fexceptions " \
     -DLIBCXXABI_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DCMAKE_SHARED_LINKER_FLAGS="-L../../libunwind/build/lib" \
