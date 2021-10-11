@@ -25,8 +25,8 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=clang-13 \
+    -DCMAKE_CXX_COMPILER=clang++-13 \
     -DCMAKE_CXX_FLAGS=-D_BSD_SOURCE \
     -DLIBUNWIND_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DLIBUNWIND_ENABLE_SHARED=OFF \
@@ -45,8 +45,8 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=clang-13 \
+    -DCMAKE_CXX_COMPILER=clang++-13 \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -D__ORBIS__ -frtti -fexceptions" \
     -DORBIS=ON \
     -DLIBCXX_TARGET_TRIPLE=x86_64-scei-ps4 \
