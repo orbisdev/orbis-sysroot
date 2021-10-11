@@ -23,3 +23,10 @@ done
 mkdir -p $PS4SDK/usr/lib
 
 cp *.so $PS4SDK/usr/lib
+
+cd $PS4SDK/usr/lib
+ln -s libSceLibcInternal_stub.so libc.so
+ln -s libSceLibcInternal_stub.so libm.so
+ln -s libSceLibcInternal_stub.so libdl.so
+ln -s libkernel_sys_stub.so libpthread.so
+

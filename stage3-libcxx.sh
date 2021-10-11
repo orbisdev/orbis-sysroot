@@ -48,6 +48,7 @@ cmake \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -D__ORBIS__ -frtti -fexceptions" \
+    -DORBIS=ON \
     -DLIBCXX_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DLIBCXX_CXX_ABI=libcxxabi \
     -DLIBCXX_CXX_ABI_INCLUDE_PATHS=../../libcxxabi/include \
