@@ -2,6 +2,7 @@
 set -e
 
 sh prestage0-llvm.sh
+sh stage0-binutils.sh
 # sh stage1-headers.sh
 # sh stage2-libgen.sh
 # sh stage3-libcxx.sh
