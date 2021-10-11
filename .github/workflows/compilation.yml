@@ -22,37 +22,34 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Install ninja-build texinfo bison flex findutils
-      run: |
-        sudo apt-get update
-        sudo apt-get -y install ninja-build texinfo bison flex findutils
+    # - name: Install ninja-build texinfo bison flex findutils
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get -y install ninja-build texinfo bison flex findutils
 
     - name: Runs all the stages in the shell
-      env:
-        CC: clang
-        CXX: clang++
-        ASM: clang
       run: |
-        ./build.sh ${{ github.event.client_payload.sha }}
+        sudo ./build.sh
+        clang --version
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: toolchain
-        path: toolchain.tar.gz
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: toolchain
+    #     path: toolchain.tar.gz
     
-    - name: Extract tag name
-      id: tag
-      uses: actions/github-script@0.9.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          return context.payload.ref.replace(/\/refs\/tags\//, '');
+    # - name: Extract tag name
+    #   id: tag
+    #   uses: actions/github-script@0.9.0
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       return context.payload.ref.replace(/\/refs\/tags\//, '');
     
-    - name: Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-        files: toolchain.tar.gz
-        tag_name: ${{ steps.tag.outputs.result }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Release
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   uses: softprops/action-gh-release@v1
+    #   with:
+    #     files: toolchain.tar.gz
+    #     tag_name: ${{ steps.tag.outputs.result }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
