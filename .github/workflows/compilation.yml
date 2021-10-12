@@ -47,7 +47,7 @@ jobs:
         path: orbisdev_sysroot-${{ steps.slug.outputs.sha8 }}.tar
 
     - name: Create pre-release
-      if: github.ref == 'refs/heads/sce_trujy'
+      if: github.ref == 'refs/heads/master'
       uses: softprops/action-gh-release@v1
       with:
         files: orbisdev_sysroot-${{ steps.slug.outputs.sha8 }}.tar
