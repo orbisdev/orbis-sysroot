@@ -38,6 +38,7 @@ jobs:
     - name: Compress Folder
       run: |
         tar cvf orbisdev_sysroot-${{ steps.slug.outputs.sha8 }}.tar usr 
+        cp orbisdev_sysroot-${{ steps.slug.outputs.sha8 }}.tar orbisdev_sysroot.tar
 
     - name: Upload artifacts
       if: ${{ success() }}
@@ -50,8 +51,7 @@ jobs:
       if: github.ref == 'refs/heads/master'
       uses: softprops/action-gh-release@v1
       with:
-        files: orbisdev_sysroot-${{ steps.slug.outputs.sha8 }}.tar
-        prerelease: true
+        files: orbisdev_sysroot.tar
         name: "Development build"
         tag_name: "latest"
       env:
