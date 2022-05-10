@@ -11,7 +11,7 @@ PATH=$ORBIS_BINUTILS:$PATH
 ## Download the source code.
 REPO_URL="https://github.com/llvm/llvm-project.git"
 REPO_FOLDER="llvm-project"
-BRANCH_NAME="llvmorg-13.0.0"
+BRANCH_NAME="llvmorg-14.0.3"
 if test ! -d "$REPO_FOLDER"; then
 	git clone --depth 1 -b $BRANCH_NAME $REPO_URL && cd $REPO_FOLDER || exit 1
 else
@@ -25,8 +25,8 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-13 \
-    -DCMAKE_CXX_COMPILER=clang++-13 \
+    -DCMAKE_C_COMPILER=clang-14 \
+    -DCMAKE_CXX_COMPILER=clang++-14 \
     -DCMAKE_CXX_FLAGS=-D_BSD_SOURCE \
     -DLIBUNWIND_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DLIBUNWIND_ENABLE_SHARED=OFF \
@@ -45,8 +45,8 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-13 \
-    -DCMAKE_CXX_COMPILER=clang++-13 \
+    -DCMAKE_C_COMPILER=clang-14 \
+    -DCMAKE_CXX_COMPILER=clang++-14 \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -D__ORBIS__ -frtti -fexceptions" \
     -DORBIS=ON \
     -DLIBCXX_TARGET_TRIPLE=x86_64-scei-ps4 \
@@ -71,8 +71,8 @@ cd build
 
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-13 \
-    -DCMAKE_CXX_COMPILER=clang++-13 \
+    -DCMAKE_C_COMPILER=clang-14 \
+    -DCMAKE_CXX_COMPILER=clang++-14 \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -frtti -fexceptions " \
     -DLIBCXXABI_TARGET_TRIPLE=x86_64-scei-ps4 \
     -DCMAKE_SHARED_LINKER_FLAGS="-L../../libunwind/build/lib" \
