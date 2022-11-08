@@ -5,6 +5,9 @@ ROOT=${PWD}
 PS4SDK=$ROOT/toolchain_temp
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
+## TARGET TRIPLE
+TARGET_TRIPLE="x86_64-pc-freebsd9"
+
 ## Download the source code.
 REPO_URL="https://github.com/bminor/binutils-gdb"
 REPO_FOLDER="binutils-gdb"
@@ -15,7 +18,9 @@ else
 	cd $REPO_FOLDER || exit 1
 fi
 
-./configure --prefix=$PS4SDK --target="x86_64-pc-freebsd9" \
+./configure \
+	--prefix=$PS4SDK \
+	--target=$TARGET_TRIPLE \
 	--disable-nls \
 	--disable-dependency-tracking \
 	--disable-werror \

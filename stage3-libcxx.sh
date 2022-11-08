@@ -8,10 +8,16 @@ ORBIS_BINUTILS=$ROOT/toolchain_temp/bin
 # We need orbis-ld
 PATH=$ORBIS_BINUTILS:$PATH
 
+## CLANG Version
+CLANG_VERSION="15"
+
+## TARGET TRIPLE
+TARGET_TRIPLE="x86_64-scei-ps4"
+
 ## Download the source code.
 REPO_URL="https://github.com/llvm/llvm-project.git"
 REPO_FOLDER="llvm-project"
-BRANCH_NAME="llvmorg-14.0.3"
+BRANCH_NAME="llvmorg-15.0.4"
 if test ! -d "$REPO_FOLDER"; then
 	git clone --depth 1 -b $BRANCH_NAME $REPO_URL && cd $REPO_FOLDER || exit 1
 else
@@ -25,10 +31,10 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-14 \
-    -DCMAKE_CXX_COMPILER=clang++-14 \
+    -DCMAKE_C_COMPILER=clang-$CLANG_VERSION \
+    -DCMAKE_CXX_COMPILER=clang++-$CLANG_VERSION \
     -DCMAKE_CXX_FLAGS=-D_BSD_SOURCE \
-    -DLIBUNWIND_TARGET_TRIPLE=x86_64-scei-ps4 \
+    -DLIBUNWIND_TARGET_TRIPLE=$TARGET_TRIPLE \
     -DLIBUNWIND_ENABLE_SHARED=OFF \
     -DLIBUNWIND_ENABLE_STATIC=ON \
     -DLIBUNWIND_USE_COMPILER_RT=ON \
@@ -45,11 +51,11 @@ mkdir -p build
 cd build
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-14 \
-    -DCMAKE_CXX_COMPILER=clang++-14 \
+    -DCMAKE_C_COMPILER=clang-$CLANG_VERSION \
+    -DCMAKE_CXX_COMPILER=clang++-$CLANG_VERSION \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -D__ORBIS__ -frtti -fexceptions" \
     -DORBIS=ON \
-    -DLIBCXX_TARGET_TRIPLE=x86_64-scei-ps4 \
+    -DLIBCXX_TARGET_TRIPLE=$TARGET_TRIPLE \
     -DLIBCXX_CXX_ABI=libcxxabi \
     -DLIBCXX_CXX_ABI_INCLUDE_PATHS=../../libcxxabi/include \
     -DLIBCXX_CXX_ABI_LIBRARY_PATH=../../libcxxabi/build/lib \
@@ -71,10 +77,10 @@ cd build
 
 
 cmake \
-    -DCMAKE_C_COMPILER=clang-14 \
-    -DCMAKE_CXX_COMPILER=clang++-14 \
+    -DCMAKE_C_COMPILER=clang-$CLANG_VERSION \
+    -DCMAKE_CXX_COMPILER=clang++-$CLANG_VERSION \
     -DCMAKE_CXX_FLAGS="-D_BSD_SOURCE -frtti -fexceptions " \
-    -DLIBCXXABI_TARGET_TRIPLE=x86_64-scei-ps4 \
+    -DLIBCXXABI_TARGET_TRIPLE=$TARGET_TRIPLE \
     -DCMAKE_SHARED_LINKER_FLAGS="-L../../libunwind/build/lib" \
     -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
     -DLIBCXXABI_ENABLE_SHARED=OFF \

@@ -139,11 +139,48 @@ index 0000000000000000000000000000000000000000..6210dc3cc57ca60a3a279d2e5d30bed8
 +
 +    return dest_converted;
 +}
+diff --git a/libcxx/include/locale b/libcxx/include/locale
+index b01c66d0430f66ee74118e73296780bb864e920b..03c6984712c2ffac882beb09ae4b479038ec7092 100644
+--- a/libcxx/include/locale
++++ b/libcxx/include/locale
+@@ -217,7 +217,7 @@ template <class charT> class messages_byname;
+ 
+ #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ // Most unix variants have catopen.  These are the specific ones that don't.
+-#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION) && !defined(__EMSCRIPTEN__)
++#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION) && !defined(__EMSCRIPTEN__) && !defined(__ORBIS__)
+ #    define _LIBCPP_HAS_CATOPEN 1
+ #    include <nl_types.h>
+ #  endif
+diff --git a/libcxx/include/__config b/libcxx/include/__config
+index 810189c94a94c43d5857c6edebae4dab82cfe777..a1a0029f95613bc3d28f9c67e8aa6abdfd7991a1 100644
+--- a/libcxx/include/__config
++++ b/libcxx/include/__config
+@@ -727,8 +727,8 @@ _LIBCPP_BEGIN_NAMESPACE_STD _LIBCPP_END_NAMESPACE_STD
+ #    define _LIBCPP_DECLARE_STRONG_ENUM_EPILOG(x)
+ #  endif // _LIBCPP_CXX03_LANG
+ 
+-#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__sun__) ||                \
+-      defined(__NetBSD__)
++#  if (defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || defined(__sun__) ||                \
++      defined(__NetBSD__)) && !defined(__ORBIS__)
+ #    define _LIBCPP_LOCALE__L_EXTENSIONS 1
+ #  endif
+ 
+@@ -756,7 +756,7 @@ _LIBCPP_BEGIN_NAMESPACE_STD _LIBCPP_END_NAMESPACE_STD
+ #    define _LIBCPP_HAS_DEFAULTRUNELOCALE
+ #  endif
+ 
+-#  if defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)
++#  if (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)) && !defined(__ORBIS__)
+ #    define _LIBCPP_WCTYPE_IS_MASK
+ #  endif
+ 
 diff --git a/libcxx/src/CMakeLists.txt b/libcxx/src/CMakeLists.txt
-index 12dcdf954405544625ddc00733939d54c1dad807..1b857f5d2cb7878d0429388d61a58f2d87f50fbe 100644
+index 9abf548abbb9526c6ba2da307114b9d12d781556..d450345ed5762645927282e3ace857d54fd7a9ec 100644
 --- a/libcxx/src/CMakeLists.txt
 +++ b/libcxx/src/CMakeLists.txt
-@@ -116,6 +116,10 @@ elseif(ZOS)
+@@ -112,6 +112,10 @@ elseif(ZOS)
      support/ibm/wcsnrtombs.cpp
      support/ibm/xlocale_zos.cpp
      )
@@ -154,40 +191,3 @@ index 12dcdf954405544625ddc00733939d54c1dad807..1b857f5d2cb7878d0429388d61a58f2d
  endif()
  
  if (LIBCXX_ENABLE_FILESYSTEM)
-diff --git a/libcxx/include/__config b/libcxx/include/__config
-index 458d0c1b897afe728b7e87fab932c8465cd72998..9a0d3532d1389e0b2e7f0e84c40d6f3616a86eab 100644
---- a/libcxx/include/__config
-+++ b/libcxx/include/__config
-@@ -960,8 +960,8 @@ typedef unsigned int   char32_t;
- #   define _LIBCPP_EXTERN_TEMPLATE_EVEN_IN_DEBUG_MODE(...) extern template __VA_ARGS__;
- #endif
- 
--#if defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || \
--    defined(__sun__) || defined(__NetBSD__)
-+#if (defined(__APPLE__) || defined(__FreeBSD__) || defined(_LIBCPP_MSVCRT_LIKE) || \
-+    defined(__sun__) || defined(__NetBSD__)) && !defined(__ORBIS__)
- #define _LIBCPP_LOCALE__L_EXTENSIONS 1
- #endif
- 
-@@ -990,7 +990,7 @@ typedef unsigned int   char32_t;
- #define _LIBCPP_HAS_DEFAULTRUNELOCALE
- #endif
- 
--#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)
-+#if (defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)) && !defined(__ORBIS__)
- #define _LIBCPP_WCTYPE_IS_MASK
- #endif
- 
-diff --git a/libcxx/include/locale b/libcxx/include/locale
-index 7c2d2361f7513d132115512b87c26b200cd72aed..9ab371a83e158ab54ee8ed3ce4480891d87f9d10 100644
---- a/libcxx/include/locale
-+++ b/libcxx/include/locale
-@@ -206,7 +206,7 @@ template <class charT> class messages_byname;
- 
- #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
- // Most unix variants have catopen.  These are the specific ones that don't.
--#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION)
-+#  if !defined(__BIONIC__) && !defined(_NEWLIB_VERSION) && !defined(__ORBIS__)
- #    define _LIBCPP_HAS_CATOPEN 1
- #    include <nl_types.h>
- #  endif
